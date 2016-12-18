@@ -9,3 +9,6 @@
 // public hosts static html/css/js files which express directly serves with its static middleware
 // api for babckend
 // index.js is starting point
+
+
+// Express is just a wrapper around the core NODE http module
