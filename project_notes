@@ -1,0 +1,11 @@
+//let defines vars and are only accepted inside the scope (use let in for loops)
+// const protects values from being changed
+// => used to define fxns (ex const square = a =>a*a;) => are scoped differently
+// import/export places require
+// a class is a wrapper around a constructor fuxn and used in React
+// babel transforms JSX into JS
+
+// file strucuture src has all front-end JS
+// public hosts static html/css/js files which express directly serves with its static middleware
+// api for babckend
+// index.js is starting point
