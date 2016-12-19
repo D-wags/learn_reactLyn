@@ -1,14 +1,20 @@
 import config from './config';
 import express from 'express';
+import apiRouter from "./api";
 // import fs from 'fs';
 
 //create server
 const server = express();
 
+server.set('view engine', 'ejs');
+
 server.get('/', (req, res) => {
-	res.send('Hello biatches!');
+	res.render('index', {
+		content: "<em>hail</em> Sniggen!"
+	});
 });
 
+server.use('/api', apiRouter);
 server.use(express.static('public'));
 
 // server.get('/about.html', (req, res) => {
