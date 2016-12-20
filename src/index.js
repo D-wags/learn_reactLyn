@@ -5,13 +5,23 @@
 // 	headerMessage: "Hello!!"
 // };
 
-import React from "react";
+// import React from "react";
+// import ReactDOM from 'react-dom';
+// import App from "./components/App";
+// import data from "./testdata";
+
+// ReactDOM.render(
+// 	<App contests={data.contests}/>,
+// 	document.getElementById('root')
+// 	);
+
+import React from 'react';
 import ReactDOM from 'react-dom';
-import App from "./components/App";
+
+import data from './testData';
+import App from './components/App';
 
 ReactDOM.render(
-	<App />,
-	document.getElementById('root')
-	);
-
-export default App;
+  <App contests={data.contests} />,
+  document.getElementById('root')
+);
