@@ -10,7 +10,6 @@
 			"categoryName": "Magazine",
 			"contestName": "Education"
 		},
-
 		{
 			"id": 3,
 			"categoryName": "software",
@@ -21,7 +20,5 @@
 			"categoryName": "Website",
 			"contestName": "HTML"
 		}
-
-
 	]
 }

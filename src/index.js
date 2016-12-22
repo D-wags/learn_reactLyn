@@ -15,26 +15,29 @@
 // 	document.getElementById('root')
 // 	);
 
+// import React from 'react';
+// import ReactDOM from 'react-dom';
+// import axios from 'axios';
+
+
+// import App from './components/App';
+
+
+// axios.get('/api/contests')
+// 	.then(resp => {
+// 		ReactDOM.render(
+// 			<App initialContests={resp.data.contests} />,
+// 			document.getElementById('root')
+// 			);
+// 		})
+// 		.catch(console.error);
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import axios from 'axios';
-
 
 import App from './components/App';
 
-
-axios.get('/api/contests')
-	.then(resp => {
-		ReactDOM.render(
-			<App initialContests={resp.data.contests} />,
-			document.getElementById('root')
-			);
-		})
-		.catch(console.error);
-
-
-// })
-// ReactDOM.render(
-//   <App initialContests={[]} />,
-//   document.getElementById('root')
-// );
+ReactDOM.render(
+  <App initialData={window.initialData} />,
+  document.getElementById('root')
+);

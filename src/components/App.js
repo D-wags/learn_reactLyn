@@ -1,68 +1,84 @@
-// import React from 'react';
-// import Header from './Header';
-// import ContestPreview from "./ContestPreview";
-
-
-// // use this syntax for state of just use fxn component syntax
-// class App extends React.Component {
-// 	constructor(props) {
-// 		super(props)
-// 		this.state= {pageHeader: "Naming Conventions"};
-// 	};
-
-// 	componentDidMount() {
-// 		console.log("mounted");
-// 		//ajax/events, etc...
-// 	}
-// 	render() {
-// 		return (
-// 			<div className="App">
-// 				<Header message={this.state.pageHeader} />
-// 				<div>
-// 					{this.props.contests.map(contest =>
-// 					  <ContestPreview {...contest} />
-// 				</div>
-// 			</div>
-// 		);
-// 	}
-// }
-
-// export default App;
-
 import React from 'react';
-import axios from 'axios';
 import Header from './Header';
-import ContestPreview from './ContestPreview';
-// import data from '../testData';
+import ContestList from './ContestList';
+import Contest from './Contest';
+import * as api from '../api';
+
+const pushState = (obj, url) =>
+  window.history.pushState(obj, '', url);
+
+const onPopState = handler => {
+  window.onpopstate = handler;
+};
 
 class App extends React.Component {
-  state = {
-    pageHeader: 'Naming Contests',
-    contests: this.props.initialContests
+  static propTypes = {
+    initialData: React.PropTypes.object.isRequired
   };
+  state = this.props.initialData;
   componentDidMount() {
-    // axios.get('/api/contests')
-    // .then(resp => {
-    //   this.setState({
-    //   contests: resp.data.contests
-    // });
-    //   // console.log(resp.data.contests);
-    // })
-    // .catch(console.error);
-    
+    onPopState((event) => {
+      this.setState({
+        currentContestId: (event.state || {}).currentContestId
+      });
+    });
   }
   componentWillUnmount() {
-    // clean timers, listeners
+    onPopState(null);
+  }
+  fetchContest = (contestId) => {
+    pushState(
+      { currentContestId: contestId },
+      `/contest/${contestId}`
+    );
+    api.fetchContest(contestId).then(contest => {
+      this.setState({
+        currentContestId: contest.id,
+        contests: {
+          ...this.state.contests,
+          [contest.id]: contest
+        }
+      });
+    });
+  };
+  fetchContestList = () => {
+    pushState(
+      { currentContestId: null },
+      '/'
+    );
+    api.fetchContestList().then(contests => {
+      this.setState({
+        currentContestId: null,
+        contests
+      });
+    });
+  };
+  currentContest() {
+    return this.state.contests[this.state.currentContestId];
+  }
+  pageHeader() {
+    if (this.state.currentContestId) {
+      return this.currentContest().contestName;
+    }
+
+    return 'Naming Contests';
+  }
+  currentContent() {
+    if (this.state.currentContestId) {
+      return <Contest
+               contestListClick={this.fetchContestList}
+               {...this.currentContest()} />;
+    }
+
+    return <ContestList
+            onContestClick={this.fetchContest}
+            contests={this.state.contests} />;
   }
   render() {
     return (
       <div className="App">
-        <Header message={this.state.pageHeader} />
-        <div>
-          {this.state.contests.map(contest =>
-            <ContestPreview key={contest.id} {...contest} />
-          )}
-        </div>
+        <Header message={this.pageHeader()} />
+        {this.currentContent()}
       </div>
     );
   }
