@@ -47,4 +47,3 @@ A list of free online programming books, categorized by languages/topics
     });
   });
 });
-...
